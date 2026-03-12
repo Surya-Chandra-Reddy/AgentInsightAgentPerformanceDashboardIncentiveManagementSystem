@@ -1,0 +1,151 @@
+<div class="reports-container">
+  <div class="reports-content">
+    <h2>Reports</h2>
+    <form [formGroup]="reportForm" (ngSubmit)="generateReport()">
+      <label for="reportType">Select Report Type:</label>
+      <select id="reportType" formControlName="reportType">
+        <option value="">-- Select --</option>
+        <option value="sales">Sales Report</option>
+        <option value="agent">Agent Report</option>
+        <option value="incentives">Incentives Report</option>
+      </select>
+      <button type="submit">Generate Report</button>
+    </form>
+
+    <!-- Report Display -->
+    <div *ngIf="reportType" class="report-display">
+      <!-- Report Header -->
+      <div class="report-header">
+        <div class="report-title">
+          <h3>{{ getReportTitle() }}</h3>
+          <div class="report-meta">
+            <span class="generated-date">Generated on: {{ generatedDate }}</span>
+            <span class="generated-time">at {{ generatedTime }}</span>
+          </div>
+        </div>
+        <!-- <div class="report-actions">
+          <button (click)="downloadReport()" class="download-btn">📥 Download Report</button>
+        </div> -->
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="summary-section">
+        <div class="summary-cards">
+          <div *ngIf="reportType === 'sales'" class="summary-card">
+            <div class="summary-icon">💰</div>
+            <div class="summary-content">
+              <div class="summary-value">₹{{ totalSales | number:'1.0-0' }}</div>
+              <div class="summary-label">Total Sales Amount</div>
+            </div>
+          </div>
+          <div *ngIf="reportType === 'sales'" class="summary-card">
+            <div class="summary-icon">📊</div>
+            <div class="summary-content">
+              <div class="summary-value">{{ reportData.length }}</div>
+              <div class="summary-label">Total Transactions</div>
+            </div>
+          </div>
+          <div *ngIf="reportType === 'agent'" class="summary-card">
+            <div class="summary-icon">👥</div>
+            <div class="summary-content">
+              <div class="summary-value">{{ agentData.length }}</div>
+              <div class="summary-label">Active Agents</div>
+            </div>
+          </div>
+          <div *ngIf="reportType === 'incentives'" class="summary-card">
+            <div class="summary-icon">🎁</div>
+            <div class="summary-content">
+              <div class="summary-value">₹{{ totalIncentives | number:'1.0-0' }}</div>
+              <div class="summary-label">Total Incentives</div>
+            </div>
+          </div>
+          <div *ngIf="reportType === 'incentives'" class="summary-card">
+            <div class="summary-icon">📈</div>
+            <div class="summary-content">
+              <div class="summary-value">{{ reportData.length }}</div>
+              <div class="summary-label">Incentive Records</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Table -->
+      <div class="data-table-section">
+        <div class="table-container">
+          <!-- Sales Report Table -->
+          <table *ngIf="reportType === 'sales'" class="report-table">
+            <thead>
+              <tr>
+                <th>Sale ID</th>
+                <th>Policy ID</th>
+                <th>Agent ID</th>
+                <th>Sale Amount</th>
+                <th>Sale Type</th>
+                <th>Sale Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sale of reportData">
+                <td>{{ sale.saleid }}</td>
+                <td>{{ sale.policyid }}</td>
+                <td>{{ sale.agentid }}</td>
+                <td class="amount-cell">₹{{ sale.amount| number:'1.0-0' }}</td>
+                <td>{{ sale.saletype }}</td>
+                <td>{{ sale.saleDate | date:'mediumDate' }}</td>
+                <td><span class="status-badge status-{{ sale.status.toLowerCase() }}">{{ sale.status }}</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Agent Report Table -->
+          <table *ngIf="reportType === 'agent'" class="report-table">
+            <thead>
+              <tr>
+                <th>Agent ID</th>
+                <th>Agent Name</th>
+                <th>Total Sales</th>
+                <th>Total Incentives</th>
+                <th>Sales Count</th>
+                <th>Incentives Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let agent of agentData">
+                <td>{{ agent.agentid }}</td>
+                <td>{{ agent.name }}</td>
+                <td class="amount-cell">₹{{ agent.totalSales | number:'1.0-0' }}</td>
+                <td class="amount-cell">₹{{ agent.totalIncentives | number:'1.0-0' }}</td>
+                <td>{{ agent.salesCount }}</td>
+                <td>{{ agent.incentivesCount }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Incentives Report Table -->
+          <table *ngIf="reportType === 'incentives'" class="report-table">
+            <thead>
+              <tr>
+                <th>Incentive ID</th>
+                <th>Agent ID</th>
+                <th>Amount</th>
+                <th>Calculation Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let incentive of reportData">
+                <td>{{ incentive.incentiveid }}</td>
+                <td>{{ incentive.agentid }}</td>
+                <td class="amount-cell">₹{{ incentive.amount | number:'1.0-0' }}</td>
+                <td>{{ incentive.calculationdate | date:'mediumDate' }}</td>
+                <td><span class="status-badge status-{{ incentive.status.toLowerCase() }}">{{ incentive.status }}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,75 @@
+<div class="incentives-page">
+  <app-sidebar></app-sidebar>
+
+  <main class="incentives-content">
+    <div class="incentives-header">
+      <div class="incentives-header-left">
+        <h1>Incentives</h1>
+        <div class="incentives-metrics">
+          <div class="metric">
+            <div class="metric-label">Total Incentives</div>
+            <div class="metric-value">{{ totalIncentives | currency:'INR'}}</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Pending</div>
+            <div class="metric-value">{{ pendingCount }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-icon">👤</div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters-section">
+      
+
+      <div class="filter-group">
+        <label>Status</label>
+        <select class="status-filter" [value]="selectedStatus" (change)="onStatusChange($event)">
+          <option value="All">All</option>
+          <option value="Paid">Paid</option>
+          <option value="Pending">Pending</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="table-card">
+      <div *ngIf="loading" class="loading">Loading incentives data...</div>
+
+      <table class="incentives-table" *ngIf="!loading">
+        <thead>
+          <tr>
+            <th>Incentive ID</th>
+            <th>Amount</th>
+            <th>Calculation Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let incentive of pagedIncentives">
+            <td>{{incentive.incentiveid}}</td>
+            <td>{{ incentive.amount | currency:'INR' }}</td>
+            <td>{{ incentive.calculationdate | date:'mediumDate'}}</td>
+            <td><span class="status-badge" [ngClass]="incentive.status.toLowerCase()">{{ incentive.status }}</span></td>
+          </tr>
+        </tbody>
+        <tfoot *ngIf="!loading">
+          <tr>
+            <td><strong>Total</strong></td>
+            <td><strong>{{ totalIncentives | number }}</strong></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div class="pagination" *ngIf="!loading">
+        <button (click)="prevPage()" [disabled]="page === 1">&lt;</button>
+        <span class="page-indicator">{{ page }}</span>
+        <button (click)="nextPage()" [disabled]="page * pageSize >= filteredIncentives.length">&gt;</button>
+      </div>
+    </div>
+  </main>
+</div>

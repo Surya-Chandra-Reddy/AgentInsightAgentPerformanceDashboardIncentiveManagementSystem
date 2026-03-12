@@ -1,0 +1,118 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <!-- Dashboard Header -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h1 class="dashboard-title mb-1">Admin Incentives</h1>
+          <p class="text-muted">Manage and update incentives status</p>
+        </div>
+      </div>
+ 
+      <!-- Card -->
+      <div class="card border-0 shadow-sm">
+        <div class="card-header">
+          <h5 class="mb-0">Incentives Overview</h5>
+        </div>
+        <div class="card-body">
+          <!-- Loading Spinner -->
+          <div *ngIf="loading" class="text-center py-4">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+ 
+          <!-- Incentives Table -->
+          <div *ngIf="!loading" class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Agent Name</th>
+                  <th>Agent ID</th>
+                  <th>Amount</th>
+                  <!-- <th>Bonus</th> -->
+                  <th>Calculation Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let incentive of incentives">
+                  <td>{{ incentive.agentName }}</td>
+                  <td>{{ incentive.agentid }}</td>
+                  <td>₹{{ incentive.amount | number }}</td>
+                  <!-- <td>₹{{ incentive.bonus | number }}</td> -->
+                  <td>{{ incentive.calculationdate | date:'mediumDate' }}</td>
+                  <td>
+                    <span class="badge" [ngClass]="getStatusClass(incentive.status)">
+                      {{ incentive.status }}
+                    </span>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-outline-primary"
+                      (click)="openStatusModal(incentive)"
+                      [disabled]="updatingIncentiveId === incentive.incentiveid">
+                      {{ updatingIncentiveId === incentive.incentiveid ? 'Updating' : 'Update Status' }}
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- Status Update Modal -->
+<div *ngIf="showModal" class="modal-backdrop show" style="display: block;" (click)="closeStatusModal()"></div>
+<div *ngIf="showModal" class="modal show" style="display: block;" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Incentive Status</h5>
+        <button type="button" class="btn-close" (click)="closeStatusModal()"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedIncentive">
+        <div class="mb-3">
+          <label class="form-label fw-bold">Incentive ID:</label>
+          <p>{{ selectedIncentive.incentiveid }}</p>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Agent Name:</label>
+          <p>{{ selectedIncentive.agentName }}</p>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Agent ID:</label>
+          <p>{{ selectedIncentive.agentid }}</p>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Amount:</label>
+          <p>₹{{ selectedIncentive.amount | number }}</p>
+        </div>
+        <!-- <div class="mb-3">
+          <label class="form-label fw-bold">Bonus:</label>
+          <p>₹{{ selectedIncentive.bonus | number }}</p>
+        </div> -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">Calculation Date:</label>
+          <p>{{ selectedIncentive.calculationdate }}</p>
+        </div>
+        <div class="mb-3">
+          <label for="statusSelect" class="form-label fw-bold">Status:</label>
+          <select id="statusSelect" class="form-select" [(ngModel)]="selectedStatus">
+            <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeStatusModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="confirmUpdate()" [disabled]="updatingIncentiveId === selectedIncentive?.incentiveid">
+          {{ updatingIncentiveId === selectedIncentive?.incentiveid ? 'Updating...' : 'Update Status' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

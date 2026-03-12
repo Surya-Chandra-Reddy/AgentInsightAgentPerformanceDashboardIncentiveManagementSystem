@@ -1,0 +1,216 @@
+<div class="sales-page">
+  <app-sidebar></app-sidebar>
+
+  <main class="sales-content">
+    <div class="sales-header">
+      <h1>Sales</h1>
+      <div style="display:flex; gap:8px;">
+        <button class="btn-add" (click)="openAddModal()">+ Add Sale</button>
+        <!-- New Add Policy button -->
+        <button class="btn-add" (click)="openAddPolicyModal()" style="background:#10b981;">+ Add Policy</button>
+      </div>
+    </div>
+
+    <div class="sales-metrics-row">
+      <div class="metric">
+        <div class="metric-label">Total Sales</div>
+        <div class="metric-value">{{ totalsales | currency:'INR' }}</div>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <div *ngIf="loading" class="loading">Loading sales data...</div>
+
+      <table class="sales-table" *ngIf="!loading">
+        <thead>
+          <tr>
+            <th>Policy</th>
+            <th>Date</th>
+            <th>Sale Amount</th>
+            <th>Sale-ID</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of pagedSales">
+            <td>{{ s.policyName || getPolicyName(s.policyid) }}</td>
+            <td>{{ formatDate(s.saleDate) }}</td>
+            <td>{{ s.amount | currency:'INR' }}</td>
+            <td>{{ s.saleid  }}</td>
+            <td><span class="status" [ngClass]="s.status?.toLowerCase()">{{ s.status }}</span></td>
+            <td class="row-actions">
+              <button 
+                class="btn-edit" 
+                [class.btn-disabled]="!canEditSale(s)"
+                [disabled]="!canEditSale(s)"
+                (click)="openEditModal(s)">
+                Edit
+              </button>
+              <button class="btn-delete" (click)="deleteSale(s)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot *ngIf="!loading">
+          <tr>
+            <td colspan="2"><strong>Total</strong></td>
+            <td><strong>{{ totalsales | currency:'INR' }}</strong></td>
+            <td colspan="3"></td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div class="pagination" *ngIf="!loading">
+        <button (click)="prevPage()" [disabled]="page === 1">&lt;</button>
+        <span class="page-indicator">{{ page }}</span>
+        <button (click)="nextPage()" [disabled]="page * pageSize >= sales.length">&gt;</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ✅ Add/Edit Sale Modal -->
+  <div class="modal-overlay" *ngIf="showModal()" (click)="closeModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ isEditMode() ? 'Edit Sale' : 'Add Sale' }}</h2>
+        <button class="modal-close" (click)="closeModal()">&times;</button>
+      </div>
+
+      <!-- Disclaimer for disabled edits -->
+      <div *ngIf="editDisabledReason()" class="disclaimer-banner">
+        <strong>⚠️ {{ editDisabledReason() }}</strong>
+      </div>
+
+      <form (ngSubmit)="submitForm()" class="modal-form" [ngClass]="{ 'form-disabled': editDisabledReason() }">
+        <div class="form-group">
+          <label for="policy">Policy *</label>
+          <select
+            id="policy"
+            [(ngModel)]="formData.policyid"
+            name="policyid"
+            [disabled]="formSubmitting() || !!editDisabledReason()">
+            <option value="" disabled>Select Policy</option>
+            <option *ngFor="let p of policies" [value]="p.policyid">{{ p.policyid }} — {{ p.name }}</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="amount">Amount *</label>
+            <input
+              type="number"
+              id="amount"
+              [(ngModel)]="formData.amount"
+              name="amount"
+              placeholder="0.00"
+              required
+              min="0"
+              step="0.01"
+              [disabled]="formSubmitting() || !!editDisabledReason()" />
+          </div>
+
+          <div class="form-group">
+            <label for="type">Sale Type *</label>
+            <select 
+              id="type" 
+              [(ngModel)]="formData.saletype" 
+              name="saletype" 
+              required
+              [disabled]="formSubmitting() || !!editDisabledReason()">
+              <option value="New">New</option>
+              <option value="Renewal">Renewal</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="date">Sale Date *</label>
+            <input
+              type="date"
+              id="date"
+              [(ngModel)]="formData.saleDate"
+              name="saleDate"
+              required
+              [disabled]="formSubmitting() || !!editDisabledReason()" />
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button 
+            type="submit" 
+            class="btn-submit" 
+            [disabled]="formSubmitting() || !!editDisabledReason()">
+            {{ formSubmitting() ? 'Saving...' : (isEditMode() ? 'Update Sale' : 'Add Sale') }}
+          </button>
+          <button 
+            type="button" 
+            class="btn-cancel" 
+            (click)="closeModal()"
+            [disabled]="formSubmitting()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ Add Policy Modal -->
+  <div class="modal-overlay" *ngIf="showPolicyModal()" (click)="closePolicyModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Add Policy</h2>
+        <button class="modal-close" (click)="closePolicyModal()">&times;</button>
+      </div>
+
+      <form (ngSubmit)="submitPolicyForm()" class="modal-form">
+        <div class="form-group">
+          <label for="policy_code">Policy Code (User Code) *</label>
+          <input
+            id="policy_code"
+            [(ngModel)]="policyForm.policyCode"
+            name="policyCode"
+            placeholder="e.g. POL-TERM-2024"
+            required
+            [disabled]="policyFormSubmitting()" />
+          <small style="color:#666; margin-top:4px; display:block;">Policy ID will be auto-generated (POL-001, POL-002, etc.)</small>
+        </div>
+
+        <div class="form-group">
+          <label for="policy_name">Policy Name *</label>
+          <input
+            id="policy_name"
+            [(ngModel)]="policyForm.name"
+            name="policy_name"
+            placeholder="e.g. Term Life Insurance"
+            required
+            [disabled]="policyFormSubmitting()" />
+        </div>
+
+        <!-- View Current Policies toggle and list (existing) -->
+        <div class="form-group" style="display:flex; gap:8px; align-items:center;">
+          <button type="button" class="btn-cancel" (click)="togglePolicyList()">
+            {{ showPolicyList() ? 'Hide Current Policies' : 'View Current Policies' }}
+          </button>
+          <div *ngIf="policyListLoading" style="margin-left:8px; color:#666;">Loading policies...</div>
+        </div>
+
+        <div *ngIf="showPolicyList()" style="margin-bottom:12px; max-height:200px; overflow:auto; border:1px solid #e6ecf5; padding:8px; border-radius:6px;">
+          <div *ngIf="policyList.length === 0" style="color:#666;">No policies found.</div>
+          <ul style="margin:0; padding:0 12px; list-style:none;">
+            <li *ngFor="let p of policyList" style="padding:6px 0; border-bottom:1px solid #f3f4f6;">
+              <strong>{{ p.displayPolicyId }}</strong> — <span>{{ p.name }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn-submit" [disabled]="policyFormSubmitting()">
+            {{ policyFormSubmitting() ? 'Saving...' : 'Add Policy' }}
+          </button>
+          <button type="button" class="btn-cancel" (click)="closePolicyModal()" [disabled]="policyFormSubmitting()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

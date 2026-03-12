@@ -1,0 +1,34 @@
+<div class="home-container">
+  <nav class="navbar">
+    <div class="navbar-brand">AgentInsight</div>
+    <div class="navbar-links">
+      <button (click)="navigateTo('/login')" class="nav-btn login-btn">
+        Login
+      </button>
+      <button (click)="navigateTo('/register')" class="nav-btn register-btn">
+        Register
+      </button>
+    </div>
+  </nav>
+
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>Welcome to AgentInsight</h1>
+      <p>Your intelligent assistant for insights and analytics</p>
+      <div class="hero-buttons">
+        <button 
+          (click)="navigateTo('/login')" 
+          class="btn btn-primary"
+        >
+          Get Started
+        </button>
+        <button 
+          (click)="navigateTo('/register')" 
+          class="btn btn-secondary"
+        >
+          Register
+        </button>
+      </div>
+    </div>
+  </section>
+</div>

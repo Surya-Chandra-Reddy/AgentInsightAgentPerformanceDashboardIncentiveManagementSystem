@@ -1,0 +1,35 @@
+<div class="leaderboard-page">
+  <app-sidebar></app-sidebar>
+
+  <main class="leaderboard-content">
+   
+
+    <div class="leaderboard-section">
+      <h2>Top Performers</h2>
+      <div class="leaderboard-table">
+        <div class="table-header">
+          <div class="col-rank">Rank</div>
+          <div class="col-agent">Agent</div>
+          <div class="col-total-sales">Total Sales</div>
+        </div>
+        <div class="table-body">
+          <div class="table-row" [class.current-agent]="entry.agentId" *ngFor="let entry of leaderboardEntries; trackBy: trackByEntryId; let i = index">
+            <div class="col-rank">
+              <span class="rank-icon">{{ entry.rank || (i + 1) }}</span>
+            </div>
+            <div class="col-agent">
+              <div class="agent-info">
+                <div class="agent-name">{{ entry.agentName || entry.agentId }}</div>
+                <div class="agent-id">{{ entry.agentId }}</div>
+              </div>
+            </div>
+            <div class="col-total-sales">₹{{ entry.totalSales || 0 }}</div>
+          </div>
+          <div *ngIf="leaderboardEntries.length === 0" class="no-data">
+            No leaderboard data available
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

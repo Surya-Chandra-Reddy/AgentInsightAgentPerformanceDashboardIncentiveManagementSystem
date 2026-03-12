@@ -1,0 +1,394 @@
+{
+  "users": [
+    {
+      "agentid": "A-001",
+      "name": "Agent Smith",
+      "email": "agent@gmail.com",
+      "phone": "555-0123",
+      "role": "agent",
+      "password": "Password@1",
+      "id": "9691"
+    },
+    {
+      "agentid": "ADMIN-001",
+      "name": "Admin User",
+      "email": "admin@gmail.com",
+      "phone": "555-0000",
+      "role": "admin",
+      "password": "Admin@123",
+      "id": "admin1"
+    },
+    {
+      "agentid": "A-002",
+      "name": "J. Doe",
+      "email": "jdoe@example.com",
+      "phone": "555-0456",
+      "role": "agent",
+      "password": "Password@1",
+      "id": "e745"
+    },
+    {
+      "agentid": "A-003",
+      "name": "S. Smith",
+      "email": "smith@example.com",
+      "phone": "555-0789",
+      "role": "agent",
+      "password": "Password@1",
+      "id": "31e6"
+    },
+    {
+<<<<<<< HEAD
+      "id": "2bb4",
+      "name": "Accomua",
+      "email": "agent@gmail.com",
+      "phone": "555-0123",
+      "role": "agent"
+=======
+      "id": "45c5",
+      "name": "Accomua",
+      "email": "agent@gmail.com",
+      "phone": "555-0123",
+      "role": "agent",
+      "agentid": "A-004"
+    },
+    {
+      "id": "08db",
+      "name": "Accomua",
+      "email": "agent@gmail.com",
+      "phone": "555-0123",
+      "role": "agent",
+      "agentid": "A-005"
+    },
+    {
+      "id": "72a9",
+      "name": "Accomua",
+      "email": "agent@gmail.com",
+      "phone": "555-0123",
+      "role": "agent",
+      "agentid": "A-006"
+>>>>>>> 28f72c473335420aaeaca4e35e528e8dec52042f
+    }
+  ],
+  "policies": [
+    {
+      "policyid": "P-1001",
+      "name": "Term Life",
+      "id": "d875"
+    },
+    {
+      "policyid": "P-1002",
+      "name": "Auto Protect",
+      "id": "11d2"
+    },
+    {
+      "policyid": "P-1003",
+      "name": "Home Secure",
+      "id": "3b40"
+    }
+  ],
+  "sales": [
+    {
+      "saleid": "S-9001",
+      "policyid": "P-1001",
+      "agentid": "A-001",
+      "saleamount": 1200,
+      "saletype": "New",
+      "saledate": "2025-12-08",
+      "status": "Completed",
+      "id": "fc5f",
+      "agentName": "Accomua",
+      "policyName": "Term Life"
+    },
+    {
+      "saleid": "S-9002",
+      "policyid": "P-1002",
+      "agentid": "A-002",
+      "saleamount": 1500,
+      "saletype": "Renewal",
+      "saledate": "04/18/2024",
+      "status": "Pending",
+      "id": "b561"
+    },
+    {
+      "saleid": "S-9003",
+      "policyid": "P-1003",
+      "agentid": "A-003",
+      "saleamount": 1800,
+      "saletype": "New",
+      "saledate": "04/17/2024",
+      "status": "Completed",
+      "id": "bff1"
+    },
+    {
+      "saleid": "S-9005",
+      "policyid": "P-1002",
+      "agentid": "A-002",
+      "saleamount": 950,
+      "saletype": "New",
+      "saledate": "04/14/2024",
+      "status": "Completed",
+      "id": "b7b1"
+    },
+    {
+      "saleid": "S-9006",
+      "policyid": "P-1003",
+      "agentid": "A-003",
+      "saleamount": 20000,
+      "saletype": "Renewal",
+      "saledate": "04/13/2024",
+      "status": "Completed",
+      "id": "5f86"
+    },
+    {
+      "id": "6756",
+      "saleid": "HO001",
+      "policyid": "P-1003",
+      "agentid": "A-001",
+      "saleamount": 50000,
+      "saletype": "New",
+      "saledate": "1/12/2025",
+      "status": "Completed"
+    },
+    {
+      "id": "4cfb",
+      "saleid": "V001",
+      "policyid": "P-1002",
+      "agentid": "A-001",
+      "saleamount": 100000,
+      "saletype": "New",
+      "saledate": "1/12/2025",
+      "status": "Completed"
+    },
+    {
+      "id": "a0a6",
+      "saleid": "HO002",
+      "policyid": "P-1003",
+      "agentid": "A-001",
+      "saleamount": 78000,
+      "saletype": "New",
+      "saledate": "1/12/2025",
+      "status": "Completed"
+    },
+    {
+      "id": "9ee1",
+      "saleid": "L001",
+      "policyid": "P-1001",
+      "agentid": "A-001",
+      "saleamount": 60000,
+      "saletype": "New",
+      "saledate": "2/12/2025",
+      "status": "Completed"
+    },
+    {
+      "id": "fb28",
+      "saleid": "L002",
+      "policyid": "P-1001",
+      "agentid": "A-001",
+      "saleamount": 1000,
+      "saletype": "New",
+      "saledate": "3/12/2025",
+      "status": "Completed"
+    },
+    {
+      "id": "54ff",
+      "saleid": "V002",
+      "policyid": "P-1002",
+      "agentid": "A-001",
+      "saleamount": 250000,
+      "saletype": "New",
+      "saledate": "2025-12-04",
+      "status": "Pending"
+    },
+    {
+      "id": "f7f9",
+      "saleid": "L003",
+      "policyid": "P-1001",
+      "agentid": "A-001",
+      "saleamount": 500,
+      "saletype": "New",
+      "saledate": "2025-12-04",
+      "status": "Completed"
+    },
+    {
+      "id": "07ba",
+      "saleid": "HO003",
+      "policyid": "P-1003",
+      "agentid": "A-001",
+      "saleamount": 85000,
+      "saletype": "New",
+      "saledate": "2025-12-04",
+      "status": "Completed"
+    },
+    {
+      "id": "72d4",
+      "saleid": "V003",
+      "policyid": "P-1002",
+      "agentid": "A-001",
+      "saleamount": 1200,
+      "saletype": "New",
+      "saledate": "2025-12-07",
+      "status": "Completed"
+    },
+    {
+      "id": "64d1",
+      "saleid": "L004",
+      "policyid": "P-1001",
+      "agentid": "A-001",
+      "saleamount": 9999,
+      "saletype": "New",
+      "saledate": "2025-12-07",
+      "status": "Completed"
+    },
+    {
+      "id": "e8f3",
+      "saleid": "L005",
+      "policyid": "P-1001",
+      "agentid": "A-001",
+      "saleamount": 98880,
+      "saletype": "New",
+      "saledate": "2025-12-08",
+      "status": "Completed"
+    }
+  ],
+  "incentives": [
+    {
+      "incentiveid": "I-S-9001",
+      "agentid": "A-001",
+      "amount": 12000,
+      "bonus": 1200,
+      "calculationdate": "04/20/2024",
+      "status": "Paid",
+      "id": "inc1"
+    },
+    {
+      "incentiveid": "I-S-9003",
+      "agentid": "A-003",
+      "amount": 1800,
+      "bonus": 180,
+      "calculationdate": "04/17/2024",
+      "status": "Pending",
+      "id": "inc2"
+    },
+    {
+      "incentiveid": "I-S-9005",
+      "agentid": "A-002",
+      "amount": 950,
+      "bonus": 95,
+      "calculationdate": "04/14/2024",
+      "status": "Paid",
+      "id": "inc3"
+    },
+    {
+      "incentiveid": "I-S-9006",
+      "agentid": "A-003",
+      "amount": 20000,
+      "bonus": 2000,
+      "calculationdate": "04/13/2024",
+      "status": "Pending",
+      "id": "inc4"
+    },
+    {
+      "incentiveid": "I-HO001",
+      "agentid": "A-001",
+      "amount": 50000,
+      "bonus": 5000,
+      "calculationdate": "1/12/2025",
+      "status": "Paid",
+      "id": "inc5"
+    },
+    {
+      "incentiveid": "I-V001",
+      "agentid": "A-001",
+      "amount": 100000,
+      "bonus": 10000,
+      "calculationdate": "1/12/2025",
+      "status": "Pending",
+      "id": "inc6"
+    },
+    {
+      "incentiveid": "I-HO002",
+      "agentid": "A-001",
+      "amount": 78000,
+      "bonus": 7800,
+      "calculationdate": "1/12/2025",
+      "status": "Pending",
+      "id": "inc7"
+    },
+    {
+      "incentiveid": "I-L001",
+      "agentid": "A-001",
+      "amount": 60000,
+      "bonus": 6000,
+      "calculationdate": "2/12/2025",
+      "status": "Pending",
+      "id": "inc8"
+    },
+    {
+      "incentiveid": "I-L002",
+      "agentid": "A-001",
+      "amount": 1000,
+      "bonus": 100,
+      "calculationdate": "3/12/2025",
+      "status": "Pending",
+      "id": "inc9"
+    },
+    {
+      "incentiveid": "I-L003",
+      "agentid": "A-001",
+      "amount": 500,
+      "bonus": 50,
+      "calculationdate": "2025-12-04",
+      "status": "Pending",
+      "id": "inc10"
+    },
+    {
+      "incentiveid": "I-HO003",
+      "agentid": "A-001",
+      "amount": 85000,
+      "bonus": 8500,
+      "calculationdate": "2025-12-04",
+      "status": "Pending",
+      "id": "inc11"
+    },
+    {
+      "incentiveid": "I-V003",
+      "agentid": "A-001",
+      "amount": 1200,
+      "bonus": 120,
+      "calculationdate": "2025-12-07",
+      "status": "Pending",
+      "id": "inc12"
+    },
+    {
+      "id": "5214",
+      "incentiveid": "I-L004",
+      "agentid": "A-001",
+      "amount": 9999,
+      "calculationdate": "2025-12-07",
+      "status": "Paid"
+    }
+  ],
+  "leaderboard": [
+    {
+      "entryId": "LB-001",
+      "agentId": "A-001",
+      "rank": 1,
+      "totalSales": 301000,
+      "id": "21d0"
+    },
+    {
+      "entryId": "LB-002",
+      "agentId": "A-003",
+      "rank": 2,
+      "totalSales": 3800,
+      "id": "dba6"
+    },
+    {
+      "entryId": "LB-003",
+      "agentId": "A-002",
+      "rank": 3,
+      "totalSales": 950,
+      "id": "ae89"
+    }
+  ]
+}

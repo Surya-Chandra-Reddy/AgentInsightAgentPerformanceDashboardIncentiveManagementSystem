@@ -1,0 +1,72 @@
+<div class="profile-page">
+  <div class="sidebar-wrapper">
+    <app-sidebar></app-sidebar>
+  </div>
+
+  <main class="profile-content">
+    <header class="profile-header">
+      <h1>Agent Profile</h1>
+      <div class="header-avatar">
+        <img src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740&q=80" alt="Profile">
+      </div>
+    </header>
+
+    <div class="profile-card" [class.editing-active]="!isReadOnly">
+      <div class="card-hero">
+        <div class="hero-left">
+          <div class="avatar-wrapper">
+            <img src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740&q=80" alt="Profile">
+            <span class="online-status"></span>
+          </div>
+          <div class="hero-text">
+            <h2>{{ model.name || 'Agent Name' }}</h2>
+            <span class="badge">{{ model.role }}</span>
+          </div>
+        </div>
+        
+        <button type="button" class="btn-edit-toggle" (click)="toggleEdit()" *ngIf="isReadOnly">
+          <span class="icon">✎</span> Edit Profile
+        </button>
+      </div>
+
+      <form (ngSubmit)="save()" class="profile-form">
+        <div class="form-body">
+          <div class="form-section">
+            <h3 class="section-title">Identity</h3>
+            <div class="field">
+              <label>Agent ID</label>
+              <input type="text" [(ngModel)]="model.agentid" name="agentid" readonly class="input-locked" />
+            </div>
+            <div class="field">
+              <label>Full Name</label>
+              <input type="text" [(ngModel)]="model.name" name="name" [readonly]="isReadOnly" [class.is-viewing]="isReadOnly" />
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3 class="section-title">Contact Information</h3>
+            <div class="field">
+              <label>Email Address</label>
+              <input type="email" [(ngModel)]="model.email" name="email" [readonly]="isReadOnly" [class.is-viewing]="isReadOnly" />
+            </div>
+            <div class="field">
+              <label>Phone Number</label>
+              <input type="text" [(ngModel)]="model.phone" name="phone" [readonly]="isReadOnly" [class.is-viewing]="isReadOnly" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-footer" *ngIf="!isReadOnly">
+          <button type="button" class="btn-secondary" (click)="cancel()">Discard</button>
+          <button type="submit" class="btn-primary" [disabled]="saving">
+            {{ saving ? 'Saving...' : 'Save Changes' }}
+          </button>
+        </div>
+
+        <div class="status-msg" *ngIf="message" [ngClass]="{'err': message.includes('Failed'), 'ok': message.includes('successfully')}">
+          {{ message }}
+        </div>
+      </form>
+    </div>
+  </main>
+</div>

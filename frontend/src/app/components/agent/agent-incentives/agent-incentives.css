@@ -1,0 +1,250 @@
+.incentives-page {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.incentives-content {
+  flex: 1;
+  margin-left: 240px;
+  padding: 40px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.incentives-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+
+.incentives-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.incentives-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0b1226;
+}
+
+.incentives-metrics {
+  display: flex;
+  gap: 20px;
+}
+
+.metric {
+  background: rgba(30, 90, 150, 0.06);
+  padding: 12px 18px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+}
+
+.metric-label {
+  font-size: 12px;
+  color: #556;
+  margin-bottom: 6px;
+}
+
+.metric-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0b1226;
+}
+
+.profile-icon {
+  width: 50px;
+  height: 50px;
+  background-color: #1e5a96;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Filters */
+.filters-section {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filter-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.filter-btn,
+.status-filter {
+  padding: 10px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.filter-btn:hover,
+.status-filter:hover {
+  border-color: #1e5a96;
+}
+
+.status-filter {
+  min-width: 120px;
+}
+
+/* Table Card */
+.table-card {
+  background: white;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 6px 30px rgba(9, 30, 66, 0.06);
+  overflow: auto;
+}
+
+.incentives-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.incentives-table thead {
+  background: transparent;
+}
+
+.incentives-table th {
+  text-align: left;
+  padding: 18px 12px;
+  font-weight: 600;
+  color: #233044;
+  border-bottom: 1px solid #eef2f6;
+  font-size: 14px;
+}
+
+.incentives-table td {
+  padding: 16px 12px;
+  border-bottom: 1px solid #f1f4f8;
+  color: #344054;
+  font-size: 14px;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+.status-badge.paid {
+  background: #e6f9f0;
+  color: #0b8a4a;
+}
+
+.status-badge.pending {
+  background: #fff7e6;
+  color: #b36b00;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.pagination button {
+  background: #fff;
+  border: 1px solid #e6ecf5;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.pagination button:hover:not(:disabled) {
+  border-color: #1e5a96;
+  background: #f5f9ff;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-indicator {
+  padding: 6px 10px;
+  background: #eef6ff;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .incentives-content {
+    margin-left: 200px;
+    padding: 28px;
+  }
+
+  .incentives-table {
+    min-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .incentives-content {
+    margin-left: 70px;
+    padding: 20px;
+  }
+
+  .incentives-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .incentives-header h1 {
+    font-size: 24px;
+  }
+
+  .incentives-metrics {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .filters-section {
+    flex-direction: column;
+  }
+
+  .incentives-table {
+    min-width: 100%;
+    display: block;
+    overflow-x: auto;
+  }
+}

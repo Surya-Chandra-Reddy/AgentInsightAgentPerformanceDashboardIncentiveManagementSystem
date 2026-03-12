@@ -1,0 +1,54 @@
+<div class="performance-container">
+  <div class="sidebar">
+    <app-admin-sidebar></app-admin-sidebar>
+  </div>
+
+  <div class="main-content">
+    <h2 class="dashboard-title">Agent Performance Dashboard</h2>
+
+    <form [formGroup]="filterForm" (ngSubmit)="applyFilters()" class="filter-form">
+      <label>Agent ID:</label>
+      <input type="text" formControlName="agentId" placeholder="e.g. A-001">
+      <button type="submit">View Performance</button>
+    </form>
+
+    <div *ngIf="error()" class="error-message">
+      {{ error() }}
+    </div>
+
+    <ng-container *ngIf="selectedAgentData">
+      <div class="agent-info">
+        <h3>Agent: {{ selectedAgentData.name }}</h3>
+        <p>ID: {{ selectedAgentData.agentid }} | {{ selectedAgentData.email }}</p>
+      </div>
+
+      <div class="summary-cards">
+        <div class="card">Total Sales: ₹{{ selectedAgentData.totalSales | number:'1.2-2' }}</div>
+        <div class="card">Total Incentives: ₹{{ selectedAgentData.totalIncentives | number:'1.2-2' }}</div>
+      </div>
+
+      <div class="table-section">
+        <h3>Sales ({{ selectedAgentData.sales?.length || 0 }})</h3>
+        <table class="performance-table" *ngIf="selectedAgentData.sales?.length > 0; else noSales">
+          <thead>
+            <tr>
+              <th>Sale ID</th>
+              <th>Amount</th>
+              <th>Type</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sale of selectedAgentData.sales">
+              <td>{{ sale.saleid }}</td>
+              <td>₹{{ sale.amount | number:'1.2-2' }}</td>
+              <td>{{ sale.saletype }}</td>
+              <td>{{ sale.saleDate | date:'short' }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #noSales><p>No sales recorded.</p></ng-template>
+      </div>
+    </ng-container>
+  </div>
+</div>

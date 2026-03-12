@@ -1,0 +1,95 @@
+
+<div class="login-container">
+  <!-- Left Section: Form -->
+  <div class="login-left">
+    <div class="login-form-wrapper">
+      <h1 class="welcome-title">Welcome Back!</h1>
+      <p class="welcome-text">
+        AgentInsight – Agent Performance Dashboard &amp; Incentive Management System
+      </p>
+
+      <!-- Top-level error from TS (e.g., server errors) -->
+      <div *ngIf="error()" class="error-message" role="alert" aria-live="polite">
+        {{ error() }}
+      </div>
+
+      <!-- Login Form -->
+      <form
+        #loginForm="ngForm"
+        class="login-form"
+        (ngSubmit)="onSubmit($event)"
+        novalidate
+      >
+        <!-- Email -->
+        <div class="form-group">
+          <input
+            type="email"
+            class="form-input"
+            placeholder="Email Address"
+            [ngModel]="email()"
+            (ngModelChange)="email.set($event)"
+            name="email"
+            required
+            email
+            #emailCtrl="ngModel"
+            autocomplete="email"
+            aria-required="true"
+            [attr.aria-invalid]="emailCtrl.invalid && (emailCtrl.touched || emailCtrl.dirty)"
+            autofocus
+          />
+          <div class="field-error" *ngIf="emailCtrl.invalid && (emailCtrl.touched || emailCtrl.dirty)">
+            <span *ngIf="emailCtrl.errors?.['required']">Email is required.</span>
+            <span *ngIf="emailCtrl.errors?.['email']">Enter a valid email address.</span>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <input
+            type="password"
+            class="form-input"
+            placeholder="Password"
+            [ngModel]="password()"
+            (ngModelChange)="password.set($event)"
+            name="password"
+            required
+            minlength="8"
+            pattern="^(?=.*[A-Za-z])(?=.*\d).+$"
+            #passwordCtrl="ngModel"
+            autocomplete="current-password"
+            aria-required="true"
+            [attr.aria-invalid]="passwordCtrl.invalid && (passwordCtrl.touched || passwordCtrl.dirty)"
+          />
+          <div class="field-error" *ngIf="passwordCtrl.invalid && (passwordCtrl.touched || passwordCtrl.dirty)">
+            <span *ngIf="passwordCtrl.errors?.['required']">Password is required.</span>
+            <span *ngIf="passwordCtrl.errors?.['minlength']">
+              Password must be at least {{ passwordCtrl.errors?.['minlength']?.requiredLength }} characters.
+            </span>
+            <span *ngIf="passwordCtrl.errors?.['pattern']">
+              Password must contain at least one letter and one number.
+            </span>
+          </div>
+        </div>
+
+
+        <!-- Disable submit when loading or invalid -->
+        <button type="submit" class="login-button" [disabled]="loading() || loginForm.invalid" [attr.aria-busy]="loading()">
+          {{ loading() ? 'Logging in...' : 'Log In' }}
+        </button>
+        
+        <!--Register Link -->
+         <div class="register-link">
+          <span>Don't have an account?</span>
+          <a routerLink="/register">Create one</a>
+        </div>
+        
+
+      </form>
+     
+    </div>
+  </div>
+
+  <!-- Right Section: Illustration -->
+   <div class="login-right">
+    <img src="assets/loginimg.jpg" alt="Login Illustration" class="login-image" />
+  </div>

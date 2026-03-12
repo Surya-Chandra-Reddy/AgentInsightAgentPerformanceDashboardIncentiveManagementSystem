@@ -1,0 +1,154 @@
+<div class="register-container">
+  <!-- Left Section: Form -->
+  <div class="register-left">
+    <div class="register-form-wrapper">
+      <h1 class="welcome-title">Create Your Account</h1>
+      <p class="welcome-text">
+        AgentInsight – Agent Performance Dashboard &amp; Incentive Management System
+      </p>
+
+      <!-- Top-level error -->
+      <div *ngIf="error()" class="error-message" role="alert" aria-live="polite">
+        {{ error() }}
+      </div>
+
+      <!-- Success message -->
+      <div *ngIf="success()" class="success-message" role="alert" aria-live="polite">
+        {{ success() }}
+      </div>
+
+      <!-- Register Form -->
+      <form
+        #registerForm="ngForm"
+        class="register-form"
+        (ngSubmit)="onSubmit($event)"
+        novalidate
+      >
+
+        <!-- Name -->
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-input"
+            placeholder="Full Name"
+            [ngModel]="fullName()"
+            (ngModelChange)="fullName.set($event)"
+            name="fullName"
+            required
+            minlength="3"
+            pattern="^[A-Za-z .]+$"
+            #fullNameCtrl="ngModel"
+            autocomplete="name"
+            aria-required="true"
+            [attr.aria-invalid]="fullNameCtrl.invalid && (fullNameCtrl.touched || fullNameCtrl.dirty)"
+            autofocus
+          />
+          <div class="field-error" *ngIf="fullNameCtrl.invalid && (fullNameCtrl.touched || fullNameCtrl.dirty)">
+            <span *ngIf="fullNameCtrl.errors?.['required']">Name is required.</span>
+            <span *ngIf="fullNameCtrl.errors?.['minlength']">
+              Name must be at least {{ fullNameCtrl.errors?.['minlength']?.requiredLength }} characters.
+            </span>
+            <span *ngIf="fullNameCtrl.errors?.['pattern']">
+              Name can only contain letters, spaces, and periods.
+            </span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <input
+            type="email"
+            class="form-input"
+            placeholder="Email Address"
+            [ngModel]="email()"
+            (ngModelChange)="email.set($event)"
+            name="email"
+            required
+            email
+            #emailCtrl="ngModel"
+            autocomplete="email"
+            aria-required="true"
+            [attr.aria-invalid]="emailCtrl.invalid && (emailCtrl.touched || emailCtrl.dirty)"
+          />
+          <div class="field-error" *ngIf="emailCtrl.invalid && (emailCtrl.touched || emailCtrl.dirty)">
+            <span *ngIf="emailCtrl.errors?.['required']">Email is required.</span>
+            <span *ngIf="emailCtrl.errors?.['email']">Enter a valid email address.</span>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <input
+            type="password"
+            class="form-input"
+            placeholder="Password"
+            [ngModel]="password()"
+            (ngModelChange)="password.set($event)"
+            name="password"
+            required
+            minlength="8"
+            pattern="^(?=.*[A-Za-z])(?=.*\d).+$"
+            #passwordCtrl="ngModel"
+            autocomplete="new-password"
+            aria-required="true"
+            [attr.aria-invalid]="passwordCtrl.invalid && (passwordCtrl.touched || passwordCtrl.dirty)"
+          />
+          <div class="field-error" *ngIf="passwordCtrl.invalid && (passwordCtrl.touched || passwordCtrl.dirty)">
+            <span *ngIf="passwordCtrl.errors?.['required']">Password is required.</span>
+            <span *ngIf="passwordCtrl.errors?.['minlength']">
+              Password must be at least {{ passwordCtrl.errors?.['minlength']?.requiredLength }} characters.
+            </span>
+            <span *ngIf="passwordCtrl.errors?.['pattern']">
+              Password must contain at least one letter and one number.
+            </span>
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <input
+            type="password"
+            class="form-input"
+            placeholder="Confirm Password"
+            [ngModel]="confirmPassword()"
+            (ngModelChange)="confirmPassword.set($event)"
+            name="confirmPassword"
+            required
+            #confirmPasswordCtrl="ngModel"
+            autocomplete="new-password"
+            aria-required="true"
+            [attr.aria-invalid]="confirmPasswordCtrl.invalid && (confirmPasswordCtrl.touched || confirmPasswordCtrl.dirty)"
+          />
+          <div class="field-error" *ngIf="confirmPasswordCtrl.invalid && (confirmPasswordCtrl.touched || confirmPasswordCtrl.dirty)">
+            <span *ngIf="confirmPasswordCtrl.errors?.['required']">Confirm password is required.</span>
+          </div>
+
+          <!-- Password Match Error -->
+          <div class="field-error" *ngIf="password() !== confirmPassword() && confirmPasswordCtrl.touched">
+            <span>Passwords do not match.</span>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="register-button"
+          [disabled]="loading() || registerForm.invalid || password() !== confirmPassword()"
+          [attr.aria-busy]="loading()"
+        >
+          {{ loading() ? 'Creating Account...' : 'Register' }}
+        </button>
+
+        <p class="switch-auth">
+          Already have an account?
+          <a href="/login">Log In</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Right Section -->
+    <div class="register-right">
+    <img src="assets/loginimg.jpg" alt="Login Illustration" class="register-image" />
+  </div>
+</div>

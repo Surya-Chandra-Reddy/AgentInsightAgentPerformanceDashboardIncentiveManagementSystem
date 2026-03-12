@@ -1,0 +1,108 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h1 class="dashboard-title" style="justify-content: center;align-items: center;">Admin Sales</h1>
+          <p class="text-muted">Manage and update sales status</p>
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-light">
+          <h5 class="mb-0">Sales Overview</h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="loading" class="text-center py-4">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+
+          <div *ngIf="!loading" class="table-responsive">
+            <table class="table table-hover">
+              <thead class="table-light">
+                <tr>
+                  <th>Agent Name</th>
+                  <th>Agent ID</th>
+                  <th>Amount</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let sale of sales">
+                  <td>{{ sale.agentName }}</td>
+                  <td>{{ sale.agentid }}</td>
+                  <td>₹{{ sale.saleamount | number }}</td>
+                  <td>{{ sale.saledate | date:'mediumDate' }}</td>
+                  <td>
+                    <span class="badge" [ngClass]="getStatusClass(sale.status)">
+                      {{ sale.status }}
+                    </span>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-outline-primary"
+                      (click)="openStatusModal(sale)"
+                      [disabled]="updatingSaleId === sale.saleid">
+                      {{ updatingSaleId === sale.saleid ? 'Updating...' : 'Update Status' }}
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+    </div>
+  </div>
+</div>
+
+<!-- Status Update Modal -->
+<div *ngIf="showModal" class="modal-backdrop show" style="display: block;" (click)="closeStatusModal()"></div>
+<div *ngIf="showModal" class="modal show" style="display: block;" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Sale Status</h5>
+        <button type="button" class="btn-close" (click)="closeStatusModal()"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedSale">
+        <div class="mb-3">
+          <label class="form-label fw-bold">Sale ID:</label>
+          <p>{{ selectedSale.saleid }}</p>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Agent Name:</label>
+          <p>{{ selectedSale.agentName }}</p>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Agent ID:</label>
+          <p>{{ selectedSale.agentid }}</p>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Amount:</label>
+          <p>₹{{ selectedSale.saleamount | number }}</p>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Date:</label>
+          <p>{{ selectedSale.saledate }}</p>
+        </div>
+        <div class="mb-3">
+          <label for="statusSelect" class="form-label fw-bold">Status:</label>
+          <select id="statusSelect" class="form-select" [(ngModel)]="selectedStatus">
+            <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeStatusModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="confirmUpdate()" [disabled]="updatingSaleId === selectedSale?.saleid">
+          {{ updatingSaleId === selectedSale?.saleid ? 'Updating...' : 'Update Status' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>

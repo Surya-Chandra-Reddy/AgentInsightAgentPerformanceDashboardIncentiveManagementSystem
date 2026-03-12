@@ -1,0 +1,222 @@
+
+/* ========== Base / Reset ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: #222;
+  background-color: #f5f5f5;
+}
+
+/* ========== Layout: Register ========== */
+.register-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background-color: #f5f5f5;
+}
+
+/* Left column (form) — fixed to 50% width */
+.register-left {
+  flex: 0 0 50%;       /* equal width */
+  min-width: 0;        /* prevents overflow from intrinsic content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1e5a96 0%, #2b7ab9 100%);
+  padding: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Form card */
+.register-form-wrapper {
+  background: #fff;
+  padding: 60px 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Typography */
+.welcome-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.welcome-text {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* Top-level error */
+.error-message {
+  background-color: #fee;
+  color: #c33;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  border-left: 4px solid #c33;
+}
+
+/* Success message */
+.success-message {
+  background-color: #efe;
+  color: #363;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  border-left: 4px solid #363;
+}
+
+/* Form layout */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Form controls */
+.form-group { display: flex; flex-direction: column; }
+
+.form-input {
+  padding: 14px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.form-input:focus {
+  outline: none;
+  border-color: #1e5a96;
+  box-shadow: 0 0 0 3px rgba(30, 90, 150, 0.12);
+}
+.form-input::placeholder { color: #999; }
+
+/* Field errors (per-control) */
+.field-error {
+  color: #e02222;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+.field-error span { display: block; }
+
+/* Submit button */
+.register-button {
+  padding: 14px 16px;
+  background-color: #0052cc;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.05s ease;
+  margin-top: 8px;
+}
+.register-button:hover { background-color: #003da6; }
+.register-button:active { transform: scale(0.98); }
+.register-button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Switch auth link below button */
+.switch-auth {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #555;
+}
+.switch-auth a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 600;
+}
+.switch-auth a:hover { text-decoration: underline; }
+
+/* Right column (illustration) — fixed to 50% width */
+.register-right {
+  flex: 0 0 50%;       /* equal width */
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  padding: 40px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;    /* hides any overflow from large images */
+}
+
+/* Image: fit inside the right panel like login */
+.register-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;      /* visual scale similar to login */
+  max-height: 100%;
+  object-fit: contain; /* keep the entire image visible without cropping */
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 992px) {
+  .register-image {
+    max-width: 88%;
+    max-height: 88%;
+  }
+}
+
+@media (max-width: 768px) {
+  .register-container {
+    flex-direction: column;  /* stack vertically */
+    height: auto;
+  }
+
+  .register-left,
+  .register-right {
+    flex: 0 0 auto;
+    width: 100%;
+    min-width: 0;
+    padding: 24px 20px;
+  }
+
+  .register-left { min-height: 60vh; }
+  .register-right { min-height: 40vh; }
+
+  .register-form-wrapper { padding: 40px 30px; }
+  .welcome-title { font-size: 26px; }
+
+  .register-image {
+    max-width: 90%;
+    max-height: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-left { min-height: 50vh; padding: 18px; }
+  .register-form-wrapper { padding: 30px 20px; }
+  .welcome-title { font-size: 22px; }
+  .welcome-text { font-size: 13px; }
+  .form-input, .register-button { font-size: 16px; }
+
+  .register-image {
+    max-width: 92%;
+    max-height: 92%;
+  }
+}
